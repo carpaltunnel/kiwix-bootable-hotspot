@@ -18,6 +18,26 @@ sudo systemctl stop dnsmasq
 ```
 
 Then, add this configuration item to `/etc/NetworkManager/NetworkManager.conf` :
+# kiwix-bootable-hotspot-howto
+
+Quick how-to for creating a bootable hotspot with a Raspberry Pi (or similar SBC) for serving offline Wikipedia and other information.
+
+This has been tested on a RaspberryPi 4 with Raspbian OS and an OrangePi Zero 2W with Armbian OS.  The default OrangePi OS is preconfigured to only use Huawei package repositories which seemed sketchy to me.  Armbian seems to work just fine but there are extra steps (detailed below) compared to Raspbian.  I used v25.2 rolling based on Debian Bookworm.
+
+**SD Card Size Note**:  Obviously you need enough space on your SD card to store all the data you want to serve.  The `wikipedia_en_all_maxi_2024-01.zim` I used is approximately 109GB alone so a 256GB card is suggested.
+
+## Armbian Extra Steps : 
+
+Armbian does not seem to have `nmcli` or `dnsmasq` installed by default which prevents your access point from providing IP addresses via DHCP.  If using Armbian, perform the following installation and configuration steps : 
+```bash
+sudo apt install network-manager
+sudo apt install dnsmasq
+# Stop / Disable dnsmasq to avoid conflicts with the instance started by Network Manager
+sudo systemctl disable dnsmasq
+sudo systemctl stop dnsmasq
+```
+
+Then, add this configuration item to `/etc/NetworkManager/NetworkManager.conf` :
 ```bash
 [main]
 dns=dnsmasq
