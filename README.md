@@ -38,6 +38,7 @@ sudo systemctl stop dnsmasq
 ```
 
 Then, add this configuration item to `/etc/NetworkManager/NetworkManager.conf` :
+
 ```bash
 [main]
 dns=dnsmasq
